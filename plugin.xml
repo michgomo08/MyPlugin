@@ -1,15 +1,28 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="cordova-my-plugin" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
-<name>MyPlugin</name>
-<js-module name="MyPlugin" src="www/MyPlugin.js">
-<clobbers target="cordova.plugins.MyPlugin" />
-</js-module>
+<plugin id="cordova-my-plugin" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>MyPlugin</name>
 
-<platform name="android">
-<config-file parent="/*" target="res/xml/config.xml">
-<feature name="MyPlugin"><param name="android-package" value="cordova-my-plugin.MyPlugin" /></feature></config-file>
-<config-file parent="/*" target="AndroidManifest.xml"></config-file>
-<source-file src="src/android/MyPlugin.java" target-dir="src/cordova-my-plugin/MyPlugin" />
-</platform>
+    <description>Test Plugin</description>
+    <license>Apache 2.0</license>
+    <keywords>android, test</keywords>
+
+    <engines>
+        <engine name="cordova" version=">=3.0.0" />
+    </engines>
+
+    <js-module name="MyPlugin" src="www/MyPlugin.js">
+        <clobbers target="cordova.plugins.MyPlugin" />
+    </js-module>
+
+    <platform name="android">
+        <config-file target="config.xml" parent="/*">
+            <feature name="MyPlugin">
+                <param name="android-package" value="com.mgm.MyPlugin" />
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/MyPlugin.java" target-dir="src/com/mgm/MyPlugin" />
+    </platform>
+    
 
 </plugin>
