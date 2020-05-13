@@ -1,17 +1,21 @@
-var exec = require('cordova/exec');
+module.exports = {
 
-exports.coolMethod = function(arg0, success, error) {
-    exec(success, error, 'MyPlugin', 'coolMethod', [arg0]);
-};
-
-
-
-var PLUGIN_NAME = 'MyPlugin';
-
-var MyPlugin = {
     echo: function(phrase, cb) {
-        exec(cb, null, PLUGIN_NAME, 'echo', [phrase]);
-    }
-};
+        cordova.exec(cb, null, "MyPlugin", "echo", [phrase]);
+    },
 
-module.exports = MyPlugin;
+    alert: function(title, message, buttonLabel, successCallback) {
+
+        cordova.exec(successCallback,
+
+            null, // No failure callback
+
+            "MyPlugin",
+
+            "alert",
+
+            [title, message, buttonLabel]);
+
+    }
+
+};
