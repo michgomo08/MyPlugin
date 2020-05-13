@@ -15,7 +15,7 @@ public class MyPlugin extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (action.equals("testMichael")) {
-            String message = args.getString(0) + "(desde MyPlugin).";
+            String message = args.getString(0) + " (desde MyPlugin).";
             this.testMichael(message, callbackContext);
             return true;
         }
