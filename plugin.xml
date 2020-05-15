@@ -22,7 +22,7 @@
         </config-file>
 
         <source-file src="src/android/MyPlugin.java" target-dir="src/com/mgm/MyPlugin" />
-        <source-file src="src/android/lib/ftsafe_0.7.04.jar" target-dir="lib" />
+        <source-file src="src/android/lib/ftsafe_0.7.04.jar" target-dir="src/lib" />
     </platform>
     
 
