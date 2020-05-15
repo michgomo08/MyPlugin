@@ -40,7 +40,7 @@ public class MyPlugin extends CordovaPlugin {
 
     private void testMichael(String message, CallbackContext callbackContext) {
         FTReader ftReader = null;
-        ftReader = new FTReader(MyPlugin.this,mHandler,DK.FTREADER_TYPE_BT3);
+        ftReader = new FTReader(this,mHandler,DK.FTREADER_TYPE_BT3);
         try {
             ftReader.readerFind();
             message = message +" Device Found---------->";
@@ -106,7 +106,7 @@ public class MyPlugin extends CordovaPlugin {
 		
 			case DK.BT4_NEW:
 				BluetoothDevice dev2 = (BluetoothDevice) msg.obj;
-				System.out.println.append("[BT4_NEW]:"+dev2.getName()+"\n");
+				System.out.println("[BT4_NEW]:"+dev2.getName()+"\n");
 				System.out.println(dev2.getName());
 				break;
 			case DK.BT4_ACL_DISCONNECTED:
