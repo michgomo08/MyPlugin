@@ -28,12 +28,13 @@ public class MyPlugin extends CordovaPlugin {
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		Context context = cordova.getActivity().getApplicationContext();
         if (action.equals("testMichael")) {
-            String message = args.getString(0) + " (desde MyPlugin) --- ";
+            String message = args.getString(0) + " (desde MyPlugin) --- testMichael";
             this.testMichael(message, callbackContext);
             return true;
         }
         else if(action.equals("new_activity")) {
-            this.openNewActivity(context);
+            String message = args.getString(0) + " (desde MyPlugin) --- testMichael";
+            this.openNewActivity(context, callbackContext, message);
             return true;
         }
         return false;
@@ -49,9 +50,11 @@ public class MyPlugin extends CordovaPlugin {
             }
     }
 
-    private void openNewActivity(Context context) {
+    private void openNewActivity(Context context, CallbackContext callbackContext, String message) {
         Intent intent = new Intent(context, NewActivity.class);
-        this.cordova.getActivity().startActivity(intent);
+		this.cordova.getActivity().startActivity(intent);
+		callbackContext.success(message);
+		
     }
 	
 

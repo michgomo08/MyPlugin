@@ -26,8 +26,8 @@
         </config-file>
 
         <config-file parent="/*" target="AndroidManifest.xml"></config-file>
-        <source-file src="src/android/MyPlugin.java" target-dir="src/com/mgm/MyPlugin" />
-        <source-file src="src/android/NewActivity.java" target-dir="src/com/mgm/NewActivity" />
+        <source-file src="src/android/MyPlugin.java" target-dir="src/com/mgm" />
+        <source-file src="src/android/NewActivity.java" target-dir="src/com/mgm" />
         <source-file src="src/android/activity_new.xml" target-dir="res/layout"/>
     
         <lib-file src="src/android/lib/ftsafe_0.7.04.jar" />
