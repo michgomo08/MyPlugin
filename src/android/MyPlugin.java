@@ -33,7 +33,7 @@ public class MyPlugin extends CordovaPlugin {
             return true;
         }
         else if(action.equals("new_activity")) {
-            String message = args.getString(0) + " (desde MyPlugin) --- testMichael";
+            String message = args.getString(0) + " (desde MyPlugin) --- new_activity";
             this.openNewActivity(context, callbackContext, message);
             return true;
         }
