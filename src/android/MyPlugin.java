@@ -41,7 +41,7 @@ public class MyPlugin extends CordovaPlugin {
 
                 // The intent expects as first parameter the given name for the activity in your
                 // plugin.xml
-                Intent intent = new Intent("com.mgm.NewActivity");
+                Intent intent = new Intent("com.mgm","com.mgm.NewActivity");
                 // Send some info to the activity to retrieve it later
                 intent.putExtra("title", title);
                 // Now, cordova will expect for a result using startActivityForResult and will
