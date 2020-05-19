@@ -21,21 +21,6 @@
             </feature>
         </config-file>
 
-
-
-                <!--This will be the activity, if you want another name change in both of the tags (action and activity) -->
-        <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <activity android:name="com.mgm.NewActivity"
-                android:label="New Activity">
-                <intent-filter>
-                <!-- We are going to use this name to start the activity later in Java -->
-                <action android:name="com.mgm.NewActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-                </intent-filter>
-            </activity>
-        </config-file>
-
-        <config-file parent="/*" target="AndroidManifest.xml"></config-file>
         <source-file src="src/android/MyPlugin.java" target-dir="src/com/mgm" />
         <source-file src="src/android/NewActivity.java" target-dir="src/com/mgm" />
         <source-file src="src/android/activity_new.xml" target-dir="res/layout"/>
