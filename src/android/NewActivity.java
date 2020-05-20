@@ -20,22 +20,15 @@ public class NewActivity extends Activity {
             // And retrieve the parameters that we sent before in the Main file of the plugin
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
-               String tittle = extras.getString("tittle");
+               String title = extras.getString("title");
+               Intent intent= new Intent();
+                intent.putExtra("title",title);
+                setResult(RESULT_OK,intent);
+                finish();
                
             }
         }
     }
 
-    @Override
-    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
-        firstTime = false;// There's a result, allow to exit the activity !
-        
-        // Do something with the result of the Intent data
- 
-        // Send parameters to retrieve in cordova.
-        Intent intent = new Intent();
-        intent.putExtra("data", "This is the sent information from the 2 activity :) ");
-        setResult(Activity.RESULT_OK, intent);
-        finish();// Exit of this activity !
-    }
+    
 }

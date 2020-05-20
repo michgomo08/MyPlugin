@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.app.Activity;
 import android.os.Build;
-import android.widget.Toast;// ToToast
 import android.os.Bundle;
 
 import org.apache.cordova.CordovaPlugin;
@@ -28,45 +27,46 @@ public class MyPlugin extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) {
 
-        try {
+        PUBLIC_CALLBACKS = callbackContext;
 
-            PUBLIC_CALLBACKS = callbackContext;
+        try {
 
             if (action.equals("testMichael")) {
                 String message = args.getString(0) + " (desde MyPlugin) --- testMichael";
-                this.testMichael(message, callbackContext);
+                this.testMichael(message);
                 return true;
             } else if (action.equals("new_activity")) {
                 title = args.getString(0) + " (desde MyPlugin) --- new_activity";
 
                 // The intent expects as first parameter the given name for the activity in your
                 // plugin.xml
-                Intent intent = new Intent(this,NewActivity.class);
+                Intent intent = new Intent(this.cordova.getActivity(),NewActivity.class);
                 // Send some info to the activity to retrieve it later
                 intent.putExtra("title", title);
                 // Now, cordova will expect for a result using startActivityForResult and will
                 // be handle by the onActivityResult.
                 cordova.startActivityForResult((CordovaPlugin) this, intent, 0);
+                // Send no result, to execute the callbacks later
+                PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
+                pluginResult.setKeepCallback(true); // Keep callback
+    
+                return true;
 
             }
-            // Send no result, to execute the callbacks later
-            PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
-            pluginResult.setKeepCallback(true); // Keep callback
-
-            return true;
+            return false;
         } catch (JSONException e) {
-            callbackContext.error("Reminder exception occured: " + e.toString());
+            PUBLIC_CALLBACKS.error("Reminder exception occured: " + e.toString());
             return false;
         }
 
     }
 
-    private void testMichael(String message, CallbackContext callbackContext) {
+    private void testMichael(String message) {
 
         if (message != null && message.length() > 0) {
-            callbackContext.success(message);
+            PUBLIC_CALLBACKS.success(message);
         } else {
-            callbackContext.error("Expected one non-empty string argument.");
+            PUBLIC_CALLBACKS.error("Expected one non-empty string argument.");
         }
     }
 
@@ -74,9 +74,9 @@ public class MyPlugin extends CordovaPlugin {
     public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         if (resultCode == cordova.getActivity().RESULT_OK) {
             Bundle extras = data.getExtras();// Get data sent by the Intent
-            String information = extras.getString("data"); // data parameter will be send from the other activity.
-            tolog(information); // Shows a toast with the sent information in the other class
-            PluginResult resultado = new PluginResult(PluginResult.Status.OK, "this value will be sent to cordova");
+            String information = extras.getString("title"); // data parameter will be send from the other activity.
+
+            PluginResult resultado = new PluginResult(PluginResult.Status.OK, "EXITO---this value will be sent to cordova");
             resultado.setKeepCallback(true);
             PUBLIC_CALLBACKS.sendPluginResult(resultado);
             return;
@@ -91,12 +91,5 @@ public class MyPlugin extends CordovaPlugin {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    // A function to show a toast with some data, just demo
-    public void tolog(String toLog) {
-        Context context = cordova.getActivity();
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(context, toLog, duration);
-        toast.show();
-    }
+    
 }
