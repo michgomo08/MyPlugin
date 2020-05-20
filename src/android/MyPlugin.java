@@ -21,7 +21,6 @@ import org.json.JSONObject;
  */
 public class MyPlugin extends CordovaPlugin {
 
-    private String title = "";
     private CallbackContext PUBLIC_CALLBACKS = null;
 
     @Override
@@ -32,28 +31,43 @@ public class MyPlugin extends CordovaPlugin {
         try {
 
             if (action.equals("testMichael")) {
+
                 String message = args.getString(0) + " (desde MyPlugin) --- testMichael";
                 this.testMichael(message);
                 return true;
-            } else if (action.equals("new_activity")) {
-                title = args.getString(0) + " (desde MyPlugin) --- new_activity";
 
-                // The intent expects as first parameter the given name for the activity in your
-                // plugin.xml
-                Intent intent = new Intent(this.cordova.getActivity(),NewActivity.class);
-                // Send some info to the activity to retrieve it later
-                intent.putExtra("title", title);
+            } else if (action.equals("buscarLector")) {
+
+                Intent intent = new Intent(this.cordova.getActivity(), NewActivity.class);
+                intent.putExtra("action", action);
+
                 // Now, cordova will expect for a result using startActivityForResult and will
                 // be handle by the onActivityResult.
-                cordova.startActivityForResult((CordovaPlugin) this, intent, 0);
+                cordova.startActivityForResult((CordovaPlugin) this, intent, 1);
                 // Send no result, to execute the callbacks later
                 PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
                 pluginResult.setKeepCallback(true); // Keep callback
-    
+
+                return true;
+
+            } else if (action.equals("buscarLector2")) {
+
+                Intent intent = new Intent(this.cordova.getActivity(), NewActivity.class);
+                intent.putExtra("action", action);
+
+                // Now, cordova will expect for a result using startActivityForResult and will
+                // be handle by the onActivityResult.
+                cordova.startActivityForResult((CordovaPlugin) this, intent, 2);
+                // Send no result, to execute the callbacks later
+                PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
+                pluginResult.setKeepCallback(true); // Keep callback
+
                 return true;
 
             }
+
             return false;
+
         } catch (JSONException e) {
             PUBLIC_CALLBACKS.error("Reminder exception occured: " + e.toString());
             return false;
@@ -72,11 +86,13 @@ public class MyPlugin extends CordovaPlugin {
 
     @Override
     public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+
         if (resultCode == cordova.getActivity().RESULT_OK) {
             Bundle extras = data.getExtras();// Get data sent by the Intent
-            String information = extras.getString("title"); // data parameter will be send from the other activity.
+            String information = extras.getString("action"); // data parameter will be send from the other activity.
 
-            PluginResult resultado = new PluginResult(PluginResult.Status.OK, "EXITO---this value will be sent to cordova");
+            PluginResult resultado = new PluginResult(PluginResult.Status.OK,
+                    "EXITO---" + requestCode + "---" + information);
             resultado.setKeepCallback(true);
             PUBLIC_CALLBACKS.sendPluginResult(resultado);
             return;
@@ -91,5 +107,4 @@ public class MyPlugin extends CordovaPlugin {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    
 }
